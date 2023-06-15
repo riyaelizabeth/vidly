@@ -10,47 +10,17 @@ using Vidly.ViewModels;
 
 namespace Vidly.Controllers
 {
-    public class MoviesController : Controller
+    public class CustomersController : Controller
     {
         // GET: /<controller>/
-        public IActionResult Random()
+        [Route("Customers")]
+        public IActionResult Index()
         {
-            var movie = new Movie() { Name = "shrek" };
-            var customers = new List<Customer>
-            {
-                new Customer {Name="customer1"},
-                new Customer{Name="customer2"}
-
+            var customers = new List<Customer> {
+                                new Customer { Name = "customer1" },
+                                new Customer { Name = "customer2" }
             };
-            var viewModel = new RandomMovieViewModel
-            {
-                Movie = movie,
-                Customer = customers
-            };
-            return View(viewModel);
-        }
-
-        [Route("Movies/Released/{{year}}/{{month:regex(/d{2}):range(1,12)}}")]
-        public IActionResult Edit(int id)
-        {
-            return Content("id="+ id);
-        }
-        public IActionResult Index(int? pageIndex , string sortBy)
-        {
-            if (!pageIndex.HasValue)
-            {
-                pageIndex = 1;
-            }
-            if (string.IsNullOrWhiteSpace(sortBy))
-            {
-                sortBy = "Name";
-            }
-            return Content("{0},{1}"
-            +pageIndex ,sortBy);
-        }
-        public ActionResult ByReleaseDate(int year,int month)
-        {
-            return Content(year + "/"+ month );
+            return View(customers);
         }
     }
 }
